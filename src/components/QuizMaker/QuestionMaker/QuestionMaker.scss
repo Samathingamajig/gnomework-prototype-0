@@ -1,0 +1,51 @@
+.QuestionMaker {
+  background: white;
+  background-image: linear-gradient(to bottom, orange 1rem, #0000 1rem);
+  width: 800px;
+  margin: 0.5rem;
+  padding: 1rem 0.5rem;
+  border-radius: 1rem;
+  border: 1px solid gray;
+
+  .QuestionNameSection {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+
+    * {
+      margin-left: 0.25rem;
+      margin-right: 0.25rem;
+      padding: 0.25rem;
+    }
+
+    .ChangeIndex {
+      font-size: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    input[type='text'] {
+      font-size: 1.4rem;
+      flex-grow: 1;
+      padding-bottom: 0;
+      border: none;
+      border-bottom: gray 0.25rem solid;
+      background: #fafafa;
+    }
+
+    select {
+      font-size: 1.3rem;
+      margin-right: 0.5rem;
+
+      cursor: pointer;
+
+      &:invalid {
+        color: red;
+
+        option:not(:first-child) {
+          color: black;
+        }
+      }
+    }
+  }
+}

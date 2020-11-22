@@ -1,0 +1,41 @@
+// Thanks to w3schools for the styling help
+// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_tooltip
+
+.ToolTip {
+  position: relative;
+  display: inline-block;
+
+  div.ToolTipText {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: visibility 300ms linear, 300ms;
+    font-size: 1rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+  }
+
+  &:hover div.ToolTipText {
+    visibility: visible;
+    opacity: 1;
+  }
+}
