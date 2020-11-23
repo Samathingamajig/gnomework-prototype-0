@@ -17,11 +17,13 @@ export default function QuizMaker() {
 
   const changeQuestionIndex = (newIndex: number, prevIndex: number): void => {
     setQuestionMakers((prev) => {
-      const [questionMaker] = prev.slice(prevIndex, prevIndex + 1);
-      const [before, after] = [prev.slice(0, prevIndex), prev.slice(prevIndex + 1)];
-      const empty = [...before, ...after];
-      const [start, end] = [empty.slice(0, newIndex), empty.slice(newIndex)];
-      console.log({ before, after, start, questionMaker, end });
+      const questionMaker = prev[prevIndex];
+      // console.log({ questionMaker, prev });
+      const newPrev = prev.filter((_, i) => i !== prevIndex);
+      // console.log({ newPrev });
+      const [start, end] = [newPrev.slice(0, newIndex), newPrev.slice(newIndex)];
+      // console.log({ start, questionMaker, end });
+      // console.log([...start, questionMaker, ...end]);
       return [...start, questionMaker, ...end];
     });
   };

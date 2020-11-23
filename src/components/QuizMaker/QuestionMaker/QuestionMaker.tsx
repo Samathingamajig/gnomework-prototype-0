@@ -50,8 +50,9 @@ export default function QuestionMaker({ index, questionText, questionType, chang
           </option>
           <option value="free-response">Free Response</option>
           <option value="multiple-choice">Multiple Choice</option>
-          <option value="true-false">True or False</option>
           <option value="check-box">Check Box</option>
+          <option value="true-false">True or False</option>
+          <option value="yes-no">Yes or No</option>
         </select>
       </div>
     </div>
