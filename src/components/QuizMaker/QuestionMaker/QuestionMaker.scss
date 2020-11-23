@@ -48,4 +48,23 @@
       }
     }
   }
+
+  .RemoveQuestionMakerButton {
+    background: red;
+
+    float: right;
+    margin-right: 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    border: black 3px solid;
+    border-radius: 20%;
+
+    cursor: pointer;
+  }
 }

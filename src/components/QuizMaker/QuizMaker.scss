@@ -4,4 +4,22 @@
     flex-direction: column;
     align-items: center;
   }
+
+  .AddQuestionMakerButton {
+    background: rgb(78, 255, 78);
+
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2.5rem;
+    height: 2.5rem;
+
+    border: black 3px solid;
+    border-radius: 20%;
+
+    cursor: pointer;
+  }
 }
