@@ -20,9 +20,9 @@ export default function QuestionMaker({ index, questionText, questionType, chang
   };
 
   const setQuestionType = (newSelectionEvent: ChangeEvent<HTMLSelectElement>) => {
-    console.log(newSelectionEvent);
-    console.log(newSelectionEvent.target);
-    console.log(newSelectionEvent.target.value);
+    // console.log(newSelectionEvent);
+    // console.log(newSelectionEvent.target);
+    // console.log(newSelectionEvent.target.value);
     changeQuestionValues({ questionText, questionType: newSelectionEvent.target.value }, index);
   };
 
@@ -34,7 +34,7 @@ export default function QuestionMaker({ index, questionText, questionType, chang
       else if (+newIndex <= 0 || +newIndex > quizLength) newIndex = prompt(`Your input of "${newIndex}" is outside of the range 1-${quizLength}. Enter a new value, or select cancel.`);
       else break;
     }
-    console.log(newIndex);
+    // console.log(newIndex);
 
     changeQuestionIndex(+newIndex - 1, index);
   };
