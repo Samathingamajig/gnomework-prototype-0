@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import QuestionMaker, { QuestionMakerInterface } from './QuestionMaker/QuestionMaker';
+import QuestionMaker from './QuestionMaker/QuestionMaker';
 import './QuizMaker.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import Question, { QuestionInterface } from '../../classes/Question';
 
 export default function QuizMaker() {
-  const [questionMakers, setQuestionMakers] = useState<QuestionMakerInterface[]>([]);
+  const [questionMakers, setQuestionMakers] = useState<Question[]>([]);
 
   const addQuestionMaker = () => {
-    // Add a blank QuestionMaker to the array of QuestionMakers
-    setQuestionMakers((prev) => [...prev, { questionText: '', questionType: 'default' }]);
+    // Add a blank Question to the array of QuestionMakers
+    setQuestionMakers((prev) => [...prev, new Question()]);
   };
 
-  const changeQuestionValues = (newValue: QuestionMakerInterface, index: number): void => {
+  const changeQuestionValues = (newValue: QuestionInterface, index: number): void => {
     // This just changes the element at the specified index
     // to the specified new value, but keep others the same.
     //
@@ -20,7 +21,7 @@ export default function QuizMaker() {
     // If the index is not the specified index, just return the original value.
     // If the index is the specified index, then return the new value.
     setQuestionMakers((prev) => {
-      return prev.map((prevValue, ind) => (ind !== index ? prevValue : newValue));
+      return prev.map((prevValue, ind) => (ind !== index ? prevValue : prevValue.modify(newValue)));
     });
   };
 
@@ -29,10 +30,10 @@ export default function QuizMaker() {
     // at the new index that is specified.
 
     setQuestionMakers((prev) => {
-      // Get the original QuestionMaker
-      const questionMaker = prev[prevIndex];
+      // Get the original question
+      const question = prev[prevIndex];
 
-      // Filter out the original QuestionMaker, so that all
+      // Filter out the original question, so that all
       // that you have left is everything except the given index.
       const newPrev = prev.filter((_, i) => i !== prevIndex);
 
@@ -40,9 +41,9 @@ export default function QuizMaker() {
       // and everything that would be after the new slot.
       const [before, after] = [newPrev.slice(0, newIndex), newPrev.slice(newIndex)];
 
-      // Return the new combined array, with the QuestionMaker
+      // Return the new combined array, with the question
       // inserted between the before part and the after part.
-      return [...before, questionMaker, ...after];
+      return [...before, question, ...after];
     });
   };
 
@@ -72,8 +73,8 @@ export default function QuizMaker() {
     <div className="QuizMaker">
       <h1>QuizMaker</h1>
       <section id="QuestionMakerContainer">
-        {questionMakers.map(({ questionText, questionType }, ind) => (
-          <QuestionMaker key={ind} index={ind} questionText={questionText} questionType={questionType} changeQuestionValues={changeQuestionValues} quizLength={questionMakers.length} changeQuestionIndex={changeQuestionIndex} deleteQuestion={deleteQuestion} />
+        {questionMakers.map((question, ind) => (
+          <QuestionMaker key={ind} index={ind} question={question} changeQuestionValues={changeQuestionValues} quizLength={questionMakers.length} changeQuestionIndex={changeQuestionIndex} deleteQuestion={deleteQuestion} />
         ))}
       </section>
       <button onClick={addQuestionMaker} className="AddQuestionMakerButton">

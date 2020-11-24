@@ -3,31 +3,28 @@ import ToolTip from '../../ToolTip/ToolTip';
 import './QuestionMaker.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-
-export interface QuestionMakerInterface {
-  questionText: string;
-  questionType: string;
-}
+import Question, { QuestionInterface, QuestionTypeType } from '../../../classes/Question';
 
 export interface QuestionMakerProps {
+  question: Question;
   index: number;
-  changeQuestionValues: (newValue: QuestionMakerInterface, index: number) => void;
+  changeQuestionValues: (newValue: QuestionInterface, index: number) => void;
   quizLength: number;
   changeQuestionIndex: (newIndex: number, prevIndex: number) => void;
   deleteQuestion: (index: number) => () => void;
 }
 
-export default function QuestionMaker({ index, questionText, questionType, changeQuestionValues, quizLength, changeQuestionIndex, deleteQuestion }: QuestionMakerProps & QuestionMakerInterface) {
+export default function QuestionMaker({ question, index, changeQuestionValues, quizLength, changeQuestionIndex, deleteQuestion }: QuestionMakerProps) {
   const setQuestionText = (newTextEvent: ChangeEvent<HTMLInputElement>) => {
     // This function changes the text of the input element,
     // and pushes it up to the parent's state changer function.
-    changeQuestionValues({ questionText: newTextEvent.target.value, questionType }, index);
+    changeQuestionValues({ questionText: newTextEvent.target.value }, index);
   };
 
   const setQuestionType = (newSelectionEvent: ChangeEvent<HTMLSelectElement>) => {
     // This function changes the question type of the select element,
     // and pushes it up to the parent's state changer function.
-    changeQuestionValues({ questionText, questionType: newSelectionEvent.target.value }, index);
+    changeQuestionValues({ questionType: newSelectionEvent.target.value as QuestionTypeType }, index);
   };
 
   const setQuestionIndex = () => {
@@ -73,8 +70,8 @@ export default function QuestionMaker({ index, questionText, questionType, chang
     <div className="QuestionMaker">
       <div className="QuestionNameSection">
         <ToolTip onClick={setQuestionIndex} className="ChangeIndex" hoverText="Click to change the question number">{`${index + 1}. `}</ToolTip>
-        <input type="text" value={questionText} onChange={setQuestionText} placeholder="Question goes here..."></input>
-        <select required value={questionType} title="Select what kind of question this is..." onChange={setQuestionType}>
+        <input type="text" value={question.questionText} onChange={setQuestionText} placeholder="Question goes here..."></input>
+        <select required value={question.questionType} title="Select what kind of question this is..." onChange={setQuestionType}>
           <option value="default" disabled>
             Type of question
           </option>
