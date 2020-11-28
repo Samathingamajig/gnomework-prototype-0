@@ -3,15 +3,21 @@ export type QuestionTypeType = 'default' | 'free-response' | 'multiple-choice' |
 export interface QuestionInterface {
   questionText?: string;
   questionType?: QuestionTypeType;
+  answerChoices?: string[];
+  correctAnswersIndexes?: number[];
 }
 
 export default class Question {
   public questionText: string;
   public questionType: QuestionTypeType;
+  public answerChoices: string[];
+  public correctAnswersIndexes: number[];
 
   constructor(params: QuestionInterface = {} as QuestionInterface) {
     this.questionText = params?.questionText || '';
     this.questionType = params?.questionType || 'default';
+    this.answerChoices = [];
+    this.correctAnswersIndexes = [];
   }
 
   public modify(params: QuestionInterface = {} as QuestionInterface) {

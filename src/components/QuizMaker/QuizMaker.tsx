@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QuestionMaker from './QuestionMaker/QuestionMaker';
 import './QuizMaker.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +7,12 @@ import Question, { QuestionInterface } from '../../classes/Question';
 
 export default function QuizMaker() {
   const [questionMakers, setQuestionMakers] = useState<Question[]>([]);
+  const [data, setData] = useState<string>('');
+  const [shouldLiveUpdate, setShouldLiveUpdate] = useState<boolean>(() => false);
+
+  useEffect(() => {
+    if (shouldLiveUpdate) setData(JSON.stringify(questionMakers, null, 2));
+  }, [questionMakers, setData, shouldLiveUpdate]);
 
   const addQuestionMaker = () => {
     // Add a blank Question to the array of QuestionMakers
@@ -69,17 +75,41 @@ export default function QuizMaker() {
     }
   };
 
+  const saveToJSONFile = (data: string, filename: string) => {
+    const blob = new Blob([data], { type: 'application/json' });
+    const href = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = href;
+    link.download = `${filename}.json`;
+    document.querySelector('#app')?.appendChild(link);
+    link.click();
+    document.querySelector('#app')?.removeChild(link);
+  };
+
   return (
-    <div className="QuizMaker">
-      <h1>QuizMaker</h1>
-      <section id="QuestionMakerContainer">
-        {questionMakers.map((question, ind) => (
-          <QuestionMaker key={ind} index={ind} question={question} changeQuestionValues={changeQuestionValues} quizLength={questionMakers.length} changeQuestionIndex={changeQuestionIndex} deleteQuestion={deleteQuestion} />
-        ))}
-      </section>
-      <button onClick={addQuestionMaker} className="AddQuestionMakerButton">
-        <FontAwesomeIcon icon={faPlus} className="AddQuestionMakerIcon" color="white" size="2x"></FontAwesomeIcon>
-      </button>
-    </div>
+    <>
+      <div className="QuizMaker">
+        <h1>QuizMaker</h1>
+        <div id="QuestionMakerContainer">
+          {questionMakers.map((question, ind) => (
+            <QuestionMaker key={ind} index={ind} question={question} changeQuestionValues={changeQuestionValues} quizLength={questionMakers.length} changeQuestionIndex={changeQuestionIndex} deleteQuestion={deleteQuestion} />
+          ))}
+        </div>
+        <button onClick={addQuestionMaker} className="AddQuestionMakerButton">
+          <FontAwesomeIcon icon={faPlus} className="AddQuestionMakerIcon" color="white" size="2x"></FontAwesomeIcon>
+        </button>
+      </div>
+      <br />
+      <button onClick={() => setData(JSON.stringify(questionMakers, null, 2))}>render</button>
+      <button onClick={() => setShouldLiveUpdate((prev) => !prev)}>live updating: {`${shouldLiveUpdate}`}</button>
+      {data && (
+        <>
+          <br />
+          <button onClick={() => navigator.clipboard.writeText(data)}>copy</button>
+          <button onClick={() => saveToJSONFile(data, 'data')}>save to JSON file</button>
+          <pre>{data}</pre>
+        </>
+      )}
+    </>
   );
 }

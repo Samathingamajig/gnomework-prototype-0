@@ -1,3 +1,5 @@
+$InputTextBackground: #fafafa;
+
 .QuestionMaker {
   background: white;
   background-image: linear-gradient(to bottom, orange 1rem, #0000 1rem);
@@ -30,7 +32,7 @@
       padding-bottom: 0;
       border: none;
       border-bottom: gray 0.25rem solid;
-      background: #fafafa;
+      background: $InputTextBackground;
     }
 
     select {
@@ -47,6 +49,93 @@
         }
       }
     }
+  }
+
+  .QuestionAnswersSection {
+    text-align: left;
+
+    ol {
+      counter-reset: list;
+
+      margin-right: 1rem;
+
+      & > span {
+        display: flex;
+        margin-bottom: 0.4rem;
+
+        input[type='radio'],
+        input[type='checkbox'] {
+          margin: auto;
+        }
+
+        label {
+          flex-grow: 1;
+          display: inline-flex;
+
+          li {
+            margin-left: 1rem;
+            list-style: none;
+            flex-grow: 1;
+            display: inline-flex;
+            align-items: center;
+
+            &:before {
+              content: counter(list, upper-alpha) '.';
+              counter-increment: list;
+              margin-right: 1rem;
+            }
+
+            * {
+              font-size: 1rem;
+              padding: 2px;
+            }
+
+            input[type='text'] {
+              flex-grow: 1;
+
+              background: $InputTextBackground;
+              border: none;
+              border-bottom: solid 2px gray;
+            }
+          }
+        }
+
+        button {
+          margin-left: 1rem;
+          width: 2rem;
+          height: 2rem;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          border: black 3px solid;
+          border-radius: 20%;
+
+          background: red;
+
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .AddAnswerChoiceButton {
+    margin-right: auto;
+    margin-left: auto;
+    background: rgb(78, 255, 78);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    border: black 3px solid;
+    border-radius: 20%;
+
+    cursor: pointer;
   }
 
   .RemoveQuestionMakerButton {
