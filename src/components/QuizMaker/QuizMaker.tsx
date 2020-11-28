@@ -81,9 +81,9 @@ export default function QuizMaker() {
     const link = document.createElement('a');
     link.href = href;
     link.download = `${filename}.json`;
-    document.querySelector('#app')?.appendChild(link);
+    document.querySelector('#root')?.appendChild(link);
     link.click();
-    document.querySelector('#app')?.removeChild(link);
+    document.querySelector('#root')?.removeChild(link);
   };
 
   return (

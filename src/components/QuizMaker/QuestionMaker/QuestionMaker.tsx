@@ -139,7 +139,7 @@ export default function QuestionMaker({ question, index, changeQuestionValues, q
     <div className="QuestionMaker">
       <div className="QuestionNameSection">
         <ToolTip onClick={setQuestionIndex} className="ChangeIndex" hoverText="Click to change the question number">{`${index + 1}. `}</ToolTip>
-        <input type="text" value={question.questionText} onChange={setQuestionText} placeholder="Question goes here..." required></input>
+        <input type="text" value={question.questionText} onChange={setQuestionText} placeholder="Question goes here..." required spellCheck={true}></input>
         <select value={question.questionType} title="Select what kind of question this is..." onChange={setQuestionType} required>
           <option value="default" disabled>
             Type of question
@@ -163,7 +163,7 @@ export default function QuestionMaker({ question, index, changeQuestionValues, q
                     <li key={ind}>
                       {question.questionType === 'multiple-choice' || question.questionType === 'check-box' ? (
                         <>
-                          <input type="text" value={val} onChange={(e) => changeAnswerChoiceText(e, ind)} placeholder="Answer choice goes here..." />
+                          <input type="text" value={val} onChange={(e) => changeAnswerChoiceText(e, ind)} placeholder="Answer choice goes here..." spellCheck={true} />
                         </>
                       ) : (
                         <>
